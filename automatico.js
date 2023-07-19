@@ -49,7 +49,7 @@ secuencesList.addEventListener("click", (e) => {
         fetchDeleteById(e.target.dataset.id)
         const elemDel = document.querySelector(`#secuenceAdded${e.target.dataset.id}`)
         console.log(elemDel)
-        elemDel.classList.add("animate__bounceOut")
+        elemDel.classList.add("animate__bounceOutUp")
 
     }
 })
@@ -97,7 +97,7 @@ function addHtmlSecuence(hora, steps, index) {
     console.log(hora)
     const htmlSecuence =
         `
-            <div class="secuenceAdded" id="secuenceAdded${index}" data-id="${index}">
+            <div class="secuenceAdded animate__animated" id="secuenceAdded${index}" data-id="${index}">
                 <span>Hora: "${hora}"</span>
                 <span>Pasos: "${steps}"</span>
                 <button class="buttonAdd buttonDel" id="buttonDel" data-id="${index}">
@@ -189,7 +189,7 @@ function saveSecuence(e) {
                 console.log(listSecuences)
                 renderSecuences(listSecuences)
 
-                document.querySelector(".secuenceAdded").classList.add("animate__bounceIn")
+                document.querySelector(".secuenceAdded").classList.add("animate__bounceInDown")
 
                 buttonAdd.classList.remove("hidden")
                 buttonAdd.disabled = false
