@@ -157,6 +157,8 @@ function renderSecuences(list) {
         buttonAdd.classList.add("hidden")
         buttonAdd.disabled = true
     }
+    hora = "07:00"
+    steps = 1
 
 }
 
