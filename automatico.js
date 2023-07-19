@@ -24,12 +24,12 @@ const buttonAdd = document.getElementById("buttonAdd");
 const inputTime = document.getElementById("time")
 const inputSteps = document.getElementById("steps")
 const secuencesList = document.getElementById("secuencesList")
-const saveList = document.getElementById("savelist")
+// const saveList = document.getElementById("savelist")
 
 inputTime.value = hora
 inputSteps.value = steps
 
-saveList.addEventListener("click", getAllSecuences)
+// saveList.addEventListener("click", getAllSecuences)
 buttonAdd.addEventListener("click", saveSecuence)
 
 
