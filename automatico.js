@@ -1,12 +1,13 @@
 const defatultHora = "07:00"
 const defatultSteps = 1
+const maxSecuences = 3
+const maxSteps = 7
 
 let htmlSecuences = ''
 let hora = defatultHora
 let steps = defatultSteps
 let index = 0
 let listSecuences = []
-const maxSecuences = 3
 
 
 //     `
@@ -54,9 +55,19 @@ inputTime.addEventListener("change", (e) => {
     console.log(hora)
 })
 
+const validateSteps = (e) => {
+    if (e.target.value <= maxSteps && e.target.value > 0) steps = e.target.value
+    if (e.target.value > maxSteps) steps = maxSteps
+    if (e.target.value < 0) steps = 1
+    inputSteps.value = steps
+}
+
 inputSteps.addEventListener("change", (e) => {
-    steps = e.target.value
-    console.log(steps)
+    validateSteps(e)
+})
+
+inputSteps.addEventListener("input", (e) => {
+    validateSteps(e)
 })
 
 
