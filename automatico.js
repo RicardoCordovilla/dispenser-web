@@ -2,7 +2,7 @@ getAllSecuences()
 
 const defatultHora = "07:00"
 const defatultSteps = 1
-const maxSecuences = 3
+const maxSecuences = 11
 const maxSteps = 7
 
 let htmlSecuences = ''
@@ -47,6 +47,10 @@ secuencesList.addEventListener("click", (e) => {
         e.target.classList.add("hidden")
         console.log(e.target.dataset.id)
         fetchDeleteById(e.target.dataset.id)
+        const elemDel = document.querySelector(`#secuenceAdded${e.target.dataset.id}`)
+        console.log(elemDel)
+        elemDel.classList.add("animate__bounceOut")
+
     }
 })
 
@@ -93,7 +97,7 @@ function addHtmlSecuence(hora, steps, index) {
     console.log(hora)
     const htmlSecuence =
         `
-            <div class="secuenceAdded" data-id="${index}">
+            <div class="secuenceAdded" id="secuenceAdded${index}" data-id="${index}">
                 <span>Hora: "${hora}"</span>
                 <span>Pasos: "${steps}"</span>
                 <button class="buttonAdd buttonDel" id="buttonDel" data-id="${index}">
@@ -122,6 +126,9 @@ function getAllSecuences() {
             console.log(listSecuences)
             renderSecuences(listSecuences)
 
+            // document.querySelector(".secuenceAdded").classList.add("animate__bounceIn")
+
+
             if (validateHora(hora, listSecuences) > -1) {
                 buttonAdd.classList.add("hidden")
                 buttonAdd.disabled = true
@@ -139,7 +146,7 @@ function getAllSecuences() {
 function renderSecuences(list) {
     htmlSecuences = ""
     for (let i = 0; i < list.length; i++) {
-        htmlSecuences += addHtmlSecuence(list[i].timestr, list[i].steps, list[i].id)
+        htmlSecuences = addHtmlSecuence(list[i].timestr, list[i].steps, list[i].id) + htmlSecuences
     }
     secuencesList.innerHTML = htmlSecuences
     if (listSecuences.length < maxSecuences) {
@@ -181,6 +188,9 @@ function saveSecuence(e) {
                 listSecuences.push({ timestr: json.timestr, steps: json.steps, id: json.id })
                 console.log(listSecuences)
                 renderSecuences(listSecuences)
+
+                document.querySelector(".secuenceAdded").classList.add("animate__bounceIn")
+
                 buttonAdd.classList.remove("hidden")
                 buttonAdd.disabled = false
                 hora = defatultHora
