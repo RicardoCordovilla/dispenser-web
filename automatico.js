@@ -66,7 +66,7 @@ inputSteps.addEventListener("change", (e) => {
     validateSteps(e)
 })
 
-inputSteps.addEventListener("input", (e) => {
+inputSteps.addEventListener("focusout", (e) => {
     validateSteps(e)
 })
 
