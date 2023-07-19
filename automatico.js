@@ -159,6 +159,7 @@ function renderSecuences(list) {
     }
     hora = "07:00"
     steps = 1
+    inputTime.focus()
 
 }
 
