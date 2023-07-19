@@ -1,9 +1,12 @@
-let idHora = 1
+const defatultHora = "07:00"
+const defatultSteps = 1
 
 let htmlSecuences = ''
-let hora, steps
+let hora = defatultHora
+let steps = defatultSteps
 let index = 0
 let listSecuences = []
+const maxSecuences = 3
 
 
 //     `
@@ -18,20 +21,33 @@ let listSecuences = []
 
 
 const buttonAdd = document.getElementById("buttonAdd");
-// const buttonDel = document.getElementById("secuencesList");
 const inputTime = document.getElementById("time")
 const inputSteps = document.getElementById("steps")
 const secuencesList = document.getElementById("secuencesList")
+const saveList = document.getElementById("savelist")
 
-buttonAdd.addEventListener("click", handleAdd)
-// buttonDel.addEventListener("click", handleDel)
+inputTime.value = hora
+inputSteps.value = steps
+
+saveList.addEventListener("click", getAllSecuences)
+buttonAdd.addEventListener("click", saveSecuence)
+
+
+// ----------------delete----------------------
+
 secuencesList.addEventListener("click", (e) => {
     e.preventDefault()
-    // console.log(e.target.id)
+    console.log(e.target.id)
     if (e.target.id === "buttonDel") {
+        htmlSecuences = ""
+        e.target.disabled = true
+        e.target.classList.add("hidden")
         console.log(e.target.dataset.id)
+        fetchDeleteById(e.target.dataset.id)
     }
 })
+
+
 
 inputTime.addEventListener("change", (e) => {
     hora = e.target.value
@@ -43,10 +59,10 @@ inputSteps.addEventListener("change", (e) => {
     console.log(steps)
 })
 
-// { hora: '10:00', steps: 2 }
 
 function addHtmlSecuence(hora, steps, index) {
-    htmlSecuences =
+    console.log(hora)
+    const htmlSecuence =
         `
             <div class="secuenceAdded" data-id="${index}">
                 <span>Hora: "${hora}"</span>
@@ -56,26 +72,114 @@ function addHtmlSecuence(hora, steps, index) {
                 </button>
             </div>
             `
-        + htmlSecuences
 
-    console.log(htmlSecuences)
+    console.log(htmlSecuence)
+    return htmlSecuence
+
 }
 
-function handleAdd(e) {
-    e.preventDefault()
-    console.log('add:', hora, steps)
-    listSecuences.push({ hora: hora, steps: steps, id: index })
-    index += 1
-    console.log(listSecuences)
-    addHtmlSecuence(hora, steps, index)
+
+function getAllSecuences() {
+    //     // fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias', {
+    fetch('http://localhost:9000/api/v1/secuencias', {
+        method: 'GET', mode: "cors",
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        }
+    })
+        .then((response) => response.json())
+        .then((json) => {
+            listSecuences = json
+            console.log(listSecuences)
+            renderSecuences(listSecuences)
+        })
+}
+
+function renderSecuences(list) {
+    htmlSecuences = ""
+    for (let i = 0; i < list.length; i++) {
+        htmlSecuences += addHtmlSecuence(list[i].timestr, list[i].steps, list[i].id)
+    }
     secuencesList.innerHTML = htmlSecuences
-    steps = 1
-    hora = '00:00'
+    if (listSecuences.length < maxSecuences) {
+        buttonAdd.classList.remove("hidden")
+        buttonAdd.disabled = false
+    }
+    else {
+        buttonAdd.classList.add("hidden")
+        buttonAdd.disabled = true
+    }
 }
 
-// function handleDel(e) {
-//     e.preventDefault()
-//     console.log('del')
-// }
 
 
+// -------- FETCH PARA GUARDAR-------
+
+function saveSecuence(e) {
+    e.preventDefault()
+    if (listSecuences.length < maxSecuences) {
+        buttonAdd.classList.remove("hidden")
+        buttonAdd.disabled = false
+        //     // fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias', {
+        fetch('http://localhost:9000/api/v1/secuencias', {
+            method: 'POST', mode: "cors",
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(
+                {
+                    timestr: hora,
+                    steps: steps
+                },
+            )
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json)
+                listSecuences.push({ timestr: json.timestr, steps: json.steps, id: json.id })
+                console.log(listSecuences)
+                renderSecuences(listSecuences)
+                buttonAdd.classList.remove("hidden")
+                buttonAdd.disabled = false
+                hora = defatultHora
+                steps = defatultSteps
+                inputTime.value = hora
+                inputSteps.value = steps
+                if (listSecuences.length < maxSecuences) {
+                    buttonAdd.classList.remove("hidden")
+                    buttonAdd.disabled = false
+                }
+                else {
+                    buttonAdd.classList.add("hidden")
+                    buttonAdd.disabled = true
+                }
+            })
+    }
+    else {
+        buttonAdd.classList.add("hidden")
+        buttonAdd.disabled = true
+    }
+
+}
+
+
+function fetchDeleteById(id) {
+    console.log(id)
+
+    // fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias', {
+    fetch('http://localhost:9000/api/v1/secuencias/delete/' + id, {
+        method: 'DELETE', mode: "cors",
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        }
+    })
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json)
+            getAllSecuences()
+        });
+}
+
+
+
+getAllSecuences()
