@@ -1,3 +1,5 @@
+getAllSecuences()
+
 const defatultHora = "07:00"
 const defatultSteps = 1
 const maxSecuences = 3
@@ -51,8 +53,15 @@ secuencesList.addEventListener("click", (e) => {
 
 
 inputTime.addEventListener("change", (e) => {
-    hora = e.target.value
-    console.log(hora)
+    if (validateHora(e.target.value, listSecuences) > -1) {
+        buttonAdd.classList.add("hidden")
+        buttonAdd.disabled = true
+    }
+    else {
+        buttonAdd.classList.remove("hidden")
+        buttonAdd.disabled = false
+        hora = e.target.value
+    }
 })
 
 const validateSteps = (e) => {
@@ -60,6 +69,11 @@ const validateSteps = (e) => {
     if (e.target.value > maxSteps) steps = maxSteps
     if (e.target.value < 0) steps = 1
     inputSteps.value = steps
+}
+
+const validateHora = (hora, lista) => {
+    console.log(hora, lista)
+    return lista.findIndex((elem) => elem.timestr === hora)
 }
 
 inputSteps.addEventListener("change", (e) => {
@@ -103,6 +117,18 @@ function getAllSecuences() {
             listSecuences = json
             console.log(listSecuences)
             renderSecuences(listSecuences)
+
+            if (validateHora(hora, listSecuences) > -1) {
+                buttonAdd.classList.add("hidden")
+                buttonAdd.disabled = true
+            }
+            else {
+                buttonAdd.classList.remove("hidden")
+                buttonAdd.disabled = false
+                hora = e.target.value
+            }
+
+
         })
 }
 
@@ -120,6 +146,7 @@ function renderSecuences(list) {
         buttonAdd.classList.add("hidden")
         buttonAdd.disabled = true
     }
+
 }
 
 
@@ -164,6 +191,15 @@ function saveSecuence(e) {
                     buttonAdd.classList.add("hidden")
                     buttonAdd.disabled = true
                 }
+                if (validateHora(hora, listSecuences) > -1) {
+                    buttonAdd.classList.add("hidden")
+                    buttonAdd.disabled = true
+                }
+                else {
+                    buttonAdd.classList.remove("hidden")
+                    buttonAdd.disabled = false
+                    hora = e.target.value
+                }
             })
     }
     else {
@@ -190,7 +226,3 @@ function fetchDeleteById(id) {
             getAllSecuences()
         });
 }
-
-
-
-getAllSecuences()
