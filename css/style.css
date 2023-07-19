@@ -85,16 +85,15 @@ h2 {
     top: -5px;
 } */
 
-/* .input-box input {
+.input-box input {
     width: 100%;
-    height: 50px;
     background: transparent;
-    border: none;
+    border: 2px solid #bbb;
     outline: none;
     font-size: 1em;
     color: #fff;
-    padding: 0 8px 0 5px;
-} */
+    padding: 0.4rem 0.8rem;
+}
 
 .input-box .icon {
     position: absolute;

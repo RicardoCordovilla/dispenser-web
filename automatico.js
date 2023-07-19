@@ -73,7 +73,11 @@ const validateSteps = (e) => {
 
 const validateHora = (hora, lista) => {
     console.log(hora, lista)
-    return lista.findIndex((elem) => elem.timestr === hora)
+    let val = -1
+    val = lista.length >= maxSecuences ? -1 : 0
+    val = lista.findIndex((elem) => elem.timestr === hora)
+    return val
+
 }
 
 inputSteps.addEventListener("change", (e) => {
