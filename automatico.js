@@ -80,8 +80,8 @@ function addHtmlSecuence(hora, steps, index) {
 
 
 function getAllSecuences() {
-    //     // fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias', {
-    fetch('http://localhost:9000/api/v1/secuencias', {
+    fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias', {
+        // fetch('http://localhost:9000/api/v1/secuencias', {
         method: 'GET', mode: "cors",
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -120,8 +120,8 @@ function saveSecuence(e) {
     if (listSecuences.length < maxSecuences) {
         buttonAdd.classList.remove("hidden")
         buttonAdd.disabled = false
-        //     // fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias', {
-        fetch('http://localhost:9000/api/v1/secuencias', {
+        fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias', {
+            // fetch('http://localhost:9000/api/v1/secuencias', {
             method: 'POST', mode: "cors",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -166,8 +166,8 @@ function saveSecuence(e) {
 function fetchDeleteById(id) {
     console.log(id)
 
-    // fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias', {
-    fetch('http://localhost:9000/api/v1/secuencias/delete/' + id, {
+    fetch('https://dispenser-api-production.up.railway.app/api/v1/secuencias/delete/' + id, {
+        // fetch('http://localhost:9000/api/v1/secuencias/delete/' + id, {
         method: 'DELETE', mode: "cors",
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
