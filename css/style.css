@@ -396,6 +396,6 @@ input[ type=button] {
     --animate-duration: 1s;
 }
 
-.animate__animated.animate__bounceOutUp {
-    animation-duration: 2s;
+.animate__animated.animate__fadeOutUp {
+    animation-duration: 1s;
 }

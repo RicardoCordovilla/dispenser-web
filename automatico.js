@@ -49,7 +49,7 @@ secuencesList.addEventListener("click", (e) => {
         fetchDeleteById(e.target.dataset.id)
         const elemDel = document.querySelector(`#secuenceAdded${e.target.dataset.id}`)
         console.log(elemDel)
-        elemDel.classList.add("animate__bounceOutUp")
+        elemDel.classList.add("animate__fadeOutUp")
 
     }
 })
