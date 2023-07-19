@@ -397,5 +397,10 @@ input[ type=button] {
 }
 
 .animate__animated.animate__fadeOutUp {
-    animation-duration: 1s;
+    --animation-duration: 1s;
+}
+
+.anianimate__bounce {
+    /* animation: infinite; */
+    --animation-duration: 5s;
 }
